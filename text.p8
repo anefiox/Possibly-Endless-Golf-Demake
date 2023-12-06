@@ -101,37 +101,37 @@ function auto_newline(text, max_width)
     local line = ""
     local last_space_index = 0
     local i = 1
+    if text ~= nil then
+        while i <= #text do
+            local char = sub(text, i, i)
+            line = line .. char
 
-    while i <= #text do
-        local char = sub(text, i, i)
-        line = line .. char
-
-        if char == ' ' then
-            last_space_index = i
-        end
-
-        -- Check if line reached max width
-        if #line * 4 >= max_width then
-            if last_space_index ~= 0 then
-                -- Break line at the last space
-                result = result .. sub(text, 1, last_space_index) .. "\n"
-                -- Reset text starting after the last space
-                text = sub(text, last_space_index + 1)
-                line = ""
-                i = 1  -- Reset index to start of new text portion
-                last_space_index = 0
-            else
-                -- Break line at current position if no space found
-                result = result .. line .. "\n"
-                text = sub(text, i + 1)
-                line = ""
-                i = 1  -- Reset index to start of new text portion
+            if char == ' ' then
+                last_space_index = i
             end
-        else
-            i = i + 1  -- Increment index if max width not reached
+
+            -- Check if line reached max width
+            if #line * 4 >= max_width then
+                if last_space_index ~= 0 then
+                    -- Break line at the last space
+                    result = result .. sub(text, 1, last_space_index) .. "\n"
+                    -- Reset text starting after the last space
+                    text = sub(text, last_space_index + 1)
+                    line = ""
+                    i = 1  -- Reset index to start of new text portion
+                    last_space_index = 0
+                else
+                    -- Break line at current position if no space found
+                    result = result .. line .. "\n"
+                    text = sub(text, i + 1)
+                    line = ""
+                    i = 1  -- Reset index to start of new text portion
+                end
+            else
+                i = i + 1  -- Increment index if max width not reached
+            end
         end
     end
-
     -- Add the last line
     result = result .. line
     return result
